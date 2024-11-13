@@ -79,6 +79,11 @@ function GameController(
   };
 
   const playRound = (row, column) => {
+    if (board.getBoard()[row][column].getValue() !== 0) {
+      console.log(`Cell [${row}][${column}] is already occupied! ${getActivePlayer().name}, please choose a different cell.`);
+      return; // Do not switch the turn if the cell is occupied
+    }
+
     console.log(
       `Placing ${getActivePlayer().name}'s token into cell [${row}][${column}]...`
     );
