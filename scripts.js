@@ -18,8 +18,11 @@ function Gameboard() {
   const getBoard = () => board;
 
   const placeToken = (row, column, player) => {
-    
-    // Check for free cells here...
+    if (board[row][column].getValue() !== 0) {
+      console.log(`Cell [${row}][${column}] is already occupied!`);
+      return;
+    }
+
     board[row][column].addToken(player);
   };
 
@@ -94,9 +97,3 @@ function GameController(
 }
 
 const game = GameController();
-
-// game.playRound(0,1);
-// game.playRound(2,2);
-// game.playRound(1,1);
-// game.playRound(0,0);
-// game.playRound(2,1);
