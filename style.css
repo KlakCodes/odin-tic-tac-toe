@@ -1,46 +1,71 @@
 html,
 body {
-    height: 100%;
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    background-color: #ededed;
+  height: 100%;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ededed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: coral;
-    height: 50px;
-    padding: 15px 20px;
-    font-size: 2rem;
-    color: white;
-    font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: purple;
+  height: 50px;
+  padding: 15px 20px;
+  font-size: 2rem;
+  color: white;
+  font-weight: 600;
+}
+
+.newGameBtn {
+  width: 150px;
+  height: 50px;
+  background-color:plum;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: purple;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .board {
-    display: grid;
-    grid-template-rows: repeat(3, 100px);
-    grid-template-columns: repeat(3, 100px);
-    gap: 10px;
-    padding: 10px;
-    background-color: gray;
-    border-radius: 10px;
-    width: fit-content;
-  }
-  
-  .cell {
-    background-color: lightgrey;
-    border-radius: 5px;
-  }
+  display: grid;
+  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
+  padding: 10px;
+  background-color: gray;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.cell {
+  background-color: lightgrey;
+  border-radius: 5px;
+}
+
+.cell:hover {
+  background-color: rgb(195,195,195);
+}
 
 .footer {
-    display: flex;
-    flex: 1 1 auto;
-    margin: 10px;
-    justify-content: center;
-    align-items: flex-end;
-    color: black;
-    font-size: 14px;
+  display: flex;
+  flex: 1 1 auto;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: flex-end;
+  color: black;
+  font-size: 14px;
 }
