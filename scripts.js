@@ -18,7 +18,7 @@ function Gameboard() {
   // Place a token on the board
   // Check if there is already a token in selected cell
   const placeToken = (row, column, player) => {
-    if (board[row][column].getValue() !== 0) {
+    if (board[row][column].getValue() !== '') {
       console.log(`Cell [${row}][${column}] is already occupied!`);
       return;
     }
@@ -38,7 +38,7 @@ function Gameboard() {
 
 // A cell represents each square of the board
 function Cell() {
-  let value = 0;
+  let value = '';
 
   // Accept a player's token to change the value of the cell
   const addToken = (player) => {
@@ -88,7 +88,7 @@ function GameController(
   const playRound = (row, column) => {
     // Drop a token for the current player
     // If an invalid cell is chosen, ask the user to select a different cell
-    if (board.getBoard()[row][column].getValue() !== 0) {
+    if (board.getBoard()[row][column].getValue() !== '') {
       console.log(`Cell [${row}][${column}] is already occupied! ${getActivePlayer().name}, please choose a different cell.`);
       return; // Do not switch the turn if the cell is occupied
     }

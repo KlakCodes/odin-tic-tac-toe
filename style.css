@@ -40,36 +40,16 @@ body {
   align-items: center;
 }
 
-/* .board {
-  display: grid;
-  grid-template-rows: repeat(3, 100px);
-  grid-template-columns: repeat(3, 100px);
-  gap: 10px;
-  padding: 10px;
-  background-color: gray;
-  border-radius: 10px;
-  width: fit-content;
-}
-
-.cell {
-  background-color: lightgrey;
-  border-radius: 5px;
-}
-
-.cell:hover {
-  background-color: rgb(195,195,195);
-} */
-
 .board {
   display: grid;
   height: 500px;
   width: 500px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  border: 1px solid black;
-  gap: 2px;
-  padding: 2px;
-  background-color: yellow;
+  border-radius: 10px;
+  gap: 10px;
+  padding: 10px;
+  background-color: plum;
 }
 
 .cell {
@@ -77,10 +57,20 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 2rem;
-  border: 1px solid grey;
-  background: lightyellow;
+  font-size: 4rem;
+  border-style: none;
+  border-radius: 5px;
+  background: rgb(255, 224, 255);
+  color: purple;
   cursor: pointer;
+}
+
+.turn {
+  color: black;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px;
 }
 
 .footer {
