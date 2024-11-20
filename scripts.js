@@ -130,12 +130,15 @@ function ScreenController() {
     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
     // Render board cells
-    board.forEach(row => {
-      row.forEach((cell, index) => {
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
         const cellButton = document.createElement("button");
         cellButton.classList.add("cell");
-        // Create a data attribute to identify the column
-        cellButton.dataset.column = index;
+
+        // Create a data attribute to identify the column and row
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
+
         cellButton.textContent = cell.getValue();
         boardDiv.appendChild(cellButton);
       })
@@ -144,11 +147,13 @@ function ScreenController() {
 
   // Add event listener for the board
   function clickHandlerBoard(e) {
+    const selectedRow = e.target.dataset.row;
     const selectedColumn = e.target.dataset.column;
-    // Make sure a cell is clicked and not the board border
-    if (!selectedColumn) return;
 
-    game.playRound(0, selectedColumn);
+    // Make sure a cell is clicked and not the board border
+    if (!selectedRow || !selectedColumn) return;
+
+    game.playRound(selectedRow, selectedColumn);
     updateScreen();
   }
   boardDiv.addEventListener("click", clickHandlerBoard);
