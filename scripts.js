@@ -1,3 +1,6 @@
+let playerOneName;
+let playerTwoName;
+
 // The Gameboard represents the state of the board
 function Gameboard() {
   const rows = 3;
@@ -158,8 +161,8 @@ function GameController(
   };
 }
 
-function ScreenController() {
-  const game = GameController();
+function ScreenController(playerOne, playerTwo) {
+  const game = GameController(playerOne, playerTwo);
   const playerTurnDiv = document.querySelector('.turn');
   const boardDiv = document.querySelector('.board');
   let gameOver = false;
@@ -230,8 +233,33 @@ function ScreenController() {
 
 ScreenController();
 
-// Test START
-document.querySelector(".newGameBtn").addEventListener("click", () => {
-  ScreenController();
+// Button Event Listeners
+const gameSetup = document.querySelector('dialog');
+
+document.querySelector("#newGame").addEventListener("click", () => {
+  gameSetup.showModal();
+});
+
+document.querySelector('#new_game').addEventListener("submit", function(e) {
+  e.preventDefault();
+  playerOneName = document.querySelector('#playerOne').value;
+  playerTwoName = document.querySelector('#playerTwo').value;
+  ScreenController(playerOneName, playerTwoName);
+  gameSetup.close();
+  resetUserInputs();
+});
+
+document.querySelector('.closeDialog').addEventListener("click", () => {
+  gameSetup.close();
+  resetUserInputs();
 })
-// Test END
+
+document.querySelector('#restartGame').addEventListener("click", () => {
+  ScreenController(playerOneName, playerTwoName);
+});
+
+// When called reset all inputs to clear
+function resetUserInputs() {
+  document.querySelector('#playerOne').value = '';
+  document.querySelector('#playerTwo').value = '';
+};

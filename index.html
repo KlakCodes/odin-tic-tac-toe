@@ -11,7 +11,10 @@
 <body>
     <div class="header">
         Tic Tac Toe
-        <button class="newGameBtn">New Game</button>
+        <div class="gameButtons">
+            <button class="mainButton" id="newGame">New Game</button>
+            <button class="mainButton" id="restartGame">Restart</button>
+        </div>
     </div>
     <div class="body">
         <div class="container">
@@ -20,6 +23,22 @@
           </div>
     </div>
     <div class="footer">Copyright © 2024 KlakCodes</div>
+    <dialog>
+        <button class="closeDialog">
+            <img src="images/close.svg" />
+        </button>
+        <form id="new_game" method="post">
+            <div class="form-field">
+                <label for="playerOne">PLAYER ONE (O)</label>
+                <input type="text" id="playerOne" required>
+            </div>
+            <div class="form-field">
+                <label for="playerTwo">PLAYER TWO (X)</label>
+                <input type="text" id="playerTwo" required>
+            </div>
+        </form>
+        <button class="mainButton" id="playGame" type="submit" form="new_game">Play!</button>
+    </dialog>
 </body>
 <script src="scripts.js"></script>
 
