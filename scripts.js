@@ -85,6 +85,43 @@ function GameController(
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
+  const checkWinner = () => {
+    const boardState = board.getBoard();
+
+    // Check rows
+    for (let row = 0; row < 3; row++) {
+      if (boardState[row][0].getValue() === boardState[row][1].getValue() &&
+        boardState[row][1].getValue() === boardState[row][2].getValue() &&
+        boardState[row][0].getValue() !== '') {
+        return true; // Row win
+      }
+    }
+
+    // Check columns
+    for (let col = 0; col < 3; col++) {
+      if (boardState[0][col].getValue() === boardState[1][col].getValue() &&
+        boardState[1][col].getValue() === boardState[2][col].getValue() &&
+        boardState[0][col].getValue() !== '') {
+        return true; // Column win
+      }
+    }
+
+    // Check diagonals
+    if (boardState[0][0].getValue() === boardState[1][1].getValue() &&
+      boardState[1][1].getValue() === boardState[2][2].getValue() &&
+      boardState[0][0].getValue() !== '') {
+      return true; // Diagonal win (top-left to bottom-right)
+    }
+
+    if (boardState[0][2].getValue() === boardState[1][1].getValue() &&
+      boardState[1][1].getValue() === boardState[2][0].getValue() &&
+      boardState[0][2].getValue() !== '') {
+      return true; // Diagonal win (top-right to bottom-left)
+    }
+
+    return false; // No winner
+  };
+
   const playRound = (row, column) => {
     // Drop a token for the current player
     // If an invalid cell is chosen, ask the user to select a different cell
@@ -98,9 +135,17 @@ function GameController(
     );
     board.placeToken(row, column, getActivePlayer().token);
 
+    // Check if the current player has won
+    if (checkWinner()) {
+      console.log(`${getActivePlayer().name} wins!`);
+      // You can implement a way to end the game here, like resetting the board or stopping further moves.
+      return true; // End the game if there's a winner
+    }
+
     // Switch player turn
     switchPlayerTurn();
     printNewRound();
+    return false;
   };
 
   // Initial play game message
@@ -117,6 +162,7 @@ function ScreenController() {
   const game = GameController();
   const playerTurnDiv = document.querySelector('.turn');
   const boardDiv = document.querySelector('.board');
+  let gameOver = false;
 
   const updateScreen = () => {
     // Clear the board
@@ -127,7 +173,9 @@ function ScreenController() {
     const activePlayer = game.getActivePlayer();
 
     // Display player's turn
-    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    if (!gameOver) {
+      playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    }
 
     // Render board cells
     board.forEach((row, rowIndex) => {
@@ -142,8 +190,21 @@ function ScreenController() {
         cellButton.textContent = cell.getValue();
         boardDiv.appendChild(cellButton);
       })
-    })
-  }
+    });
+
+    // If the game is over display winner message and disable the board
+    if (gameOver) {
+      playerTurnDiv.textContent = `${activePlayer.name} wins!`;
+      disableBoard();
+    }
+  };
+
+  const disableBoard = () => {
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => {
+      cell.disabled = true;
+    });
+  };
 
   // Add event listener for the board
   function clickHandlerBoard(e) {
@@ -153,7 +214,12 @@ function ScreenController() {
     // Make sure a cell is clicked and not the board border
     if (!selectedRow || !selectedColumn) return;
 
-    game.playRound(selectedRow, selectedColumn);
+    const gameWon = game.playRound(selectedRow, selectedColumn);
+
+    if (gameWon) {
+      gameOver = true;
+    }
+
     updateScreen();
   }
   boardDiv.addEventListener("click", clickHandlerBoard);
@@ -163,3 +229,9 @@ function ScreenController() {
 }
 
 ScreenController();
+
+// Test START
+document.querySelector(".newGameBtn").addEventListener("click", () => {
+  ScreenController();
+})
+// Test END
