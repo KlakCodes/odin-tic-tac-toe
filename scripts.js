@@ -125,6 +125,22 @@ function GameController(
     return false; // No winner
   };
 
+  const checkDraw = () => {
+    const boardState = board.getBoard();
+  
+    // Check if there are any empty cells left
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (boardState[row][col].getValue() === '') {
+          return false; // There is still an empty cell, so it's not a draw
+        }
+      }
+    }
+  
+    return true; // All cells are filled
+  };
+  
+
   const playRound = (row, column) => {
     // Drop a token for the current player
     // If an invalid cell is chosen, ask the user to select a different cell
@@ -141,8 +157,13 @@ function GameController(
     // Check if the current player has won
     if (checkWinner()) {
       console.log(`${getActivePlayer().name} wins!`);
-      // You can implement a way to end the game here, like resetting the board or stopping further moves.
       return true; // End the game if there's a winner
+    }
+
+    if (checkDraw()) {
+      console.log("It's a draw!");
+      gameOver = true;  // Mark the game as over
+      return true; // End the game if it's a draw
     }
 
     // Switch player turn
@@ -157,7 +178,8 @@ function GameController(
   return {
     playRound,
     getActivePlayer,
-    getBoard: board.getBoard
+    getBoard: board.getBoard,
+    checkWinner
   };
 }
 
@@ -196,8 +218,16 @@ function ScreenController(playerOne, playerTwo) {
     });
 
     // If the game is over display winner message and disable the board
+    // if (gameOver) {
+    //   playerTurnDiv.textContent = `${activePlayer.name} wins!`;
+    //   disableBoard();
+    // }
     if (gameOver) {
-      playerTurnDiv.textContent = `${activePlayer.name} wins!`;
+      if (game.checkWinner()) {
+        playerTurnDiv.textContent = `${activePlayer.name} wins!`;
+      } else {
+        playerTurnDiv.textContent = "It's a draw!";
+      }
       disableBoard();
     }
   };
